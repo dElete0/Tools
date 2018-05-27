@@ -1,0 +1,58 @@
+package org.haze.base.util;
+
+import java.lang.reflect.Field;
+
+/**
+ * 
+ * 输出对象的各项属性值用于测试
+ * @author 杨一帆
+ *
+ */
+public class FieldTest {
+
+	/**
+	 * 当前对象的所有属性
+	 * @param o
+	 * @throws Exception
+	 */
+	public static void outPrint(Object o) throws Exception{
+		try {
+			Class<?> clazz =  o.getClass();
+			Field [] fields = clazz.getDeclaredFields();  
+		    for(Field f:fields){  
+		    	f.setAccessible(true);  
+		    }  
+System.out.println("============="+clazz.getName()+"===============");  
+		    for(Field f:fields){  
+		    String field = f.toString().substring(f.toString().lastIndexOf(".")+1); 
+System.out.println(field+" --> "+f.get(o));  
+		    }     
+		} catch (Exception e) {
+		   throw e;
+		}
+	}
+	
+	/**
+	 * 当先对象父类的所有属性
+	 * @param o
+	 * @throws Exception
+	 */
+	public static void outPrintParent(Object o) throws Exception{
+		try {
+			Class<?> clazz =  o.getClass();
+			clazz = clazz.getSuperclass();
+			Field [] fields = clazz.getDeclaredFields();  
+		    for(Field f:fields){  
+		    	f.setAccessible(true);  
+		    }  
+System.out.println("============="+clazz.getName()+"===============");  
+		    for(Field f:fields){  
+		    String field = f.toString().substring(f.toString().lastIndexOf(".")+1); 
+System.out.println(field+" --> "+f.get(o));  
+		    }     
+		} catch (Exception e) {
+		   throw e;
+		}
+	}
+}
+
